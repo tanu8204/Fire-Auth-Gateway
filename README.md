@@ -1,9 +1,4 @@
-# Fire-Auth-Gateway
-
-Cloud Firebase db:
-https://console.firebase.google.com/u/0/project/fir-db-5c67e/firestore/data/~2Fcrud_user
-
-## FireAuthGateway
+## Fire-Auth-Gateway
 
 This is a Spring Boot application that provides RESTful API endpoints for user authentication using Firebase Authentication and Firestore as the backend database.
 
