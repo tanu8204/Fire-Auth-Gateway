@@ -17,7 +17,7 @@ RUN ./gradlew build
 FROM openjdk:17.0.1-jdk-slim
 
 # Expose port 8080
-EXPOSE 8085
+EXPOSE 8086
 
 # Create a directory for the application
 RUN mkdir /app
