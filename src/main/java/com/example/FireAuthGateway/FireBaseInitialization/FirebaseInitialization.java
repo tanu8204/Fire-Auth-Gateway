@@ -16,23 +16,21 @@ import java.util.Map;
 @Configuration
 public class FirebaseInitialization {
 
-    private static final Map<String, FirebaseApp> instances = new HashMap<>();
-
+  
     @PostConstruct
     public void initialization() {
         try {
-            FileInputStream serviceAccount =
-                    new FileInputStream("./serviceAccountKey.json");
+            // FileInputStream serviceAccount =
+            //         new FileInputStream("./serviceAccountKey.json");
+            String serviceAccount = System.getenv("serviceAccountKey.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
 
-            FirebaseApp app = FirebaseApp.initializeApp(options, "myCustomAppName");
+        FirebaseApp.initializeApp(options, "myCustomAppName");
 
-            synchronized (instances) {
-                instances.put("myCustomAppName", app);
-            }
+         
 
         } catch (IOException e) {
             e.printStackTrace();
