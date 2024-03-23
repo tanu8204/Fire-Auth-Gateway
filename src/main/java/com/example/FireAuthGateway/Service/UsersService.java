@@ -1,6 +1,7 @@
 package com.example.FireAuthGateway.Service;
 
 import com.example.FireAuthGateway.Entity.Users;
+import com.example.FireAuthGateway.FireBaseInitialization.FirebaseInitialization;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -11,6 +12,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -18,15 +20,13 @@ public class UsersService {
 
     private static final String COLLECTION_NAME = "crud_user";
 
-    private Firestore dbFirestore;
 
     @Autowired
-    public UsersService(FirebaseApp firebaseApp) {
-        this.dbFirestore = FirestoreClient.getFirestore(firebaseApp);
-    }
+    private FirebaseInitialization firebaseInitialization;
+
     public String saveUsers(Users users) throws ExecutionException, InterruptedException {
-//
-//        Firestore dbFirestore=FirestoreClient.getFirestore();
+
+        Firestore dbFirestore=FirestoreClient.getFirestore();
 
         ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(users.getUsername()).set(users);
 
@@ -34,11 +34,11 @@ public class UsersService {
     }
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
+        firebaseInitialization.awaitInitialization();
+        //Firestore dbFirestore=FirestoreClient.getFirestore();
+        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
+        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
 
-//        //Firestore dbFirestore=FirestoreClient.getFirestore();
-//        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
-//        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
-//
 
         DocumentReference documentReference=dbFirestore.collection(COLLECTION_NAME).document(username);
 
@@ -57,7 +57,7 @@ public class UsersService {
 
     public String updateUsers(Users users) throws ExecutionException, InterruptedException {
 
-//        Firestore dbFirestore=FirestoreClient.getFirestore();
+        Firestore dbFirestore=FirestoreClient.getFirestore();
 
         ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(users.getUsername()).set(users);
 
@@ -66,7 +66,7 @@ public class UsersService {
 
     public String deleteUsers(String username) throws ExecutionException, InterruptedException {
 
-//        Firestore dbFirestore=FirestoreClient.getFirestore();
+        Firestore dbFirestore=FirestoreClient.getFirestore();
 
         ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(username).delete();
 

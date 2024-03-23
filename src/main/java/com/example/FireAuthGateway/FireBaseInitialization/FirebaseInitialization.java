@@ -5,33 +5,38 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
-@Configuration
+@Service
 public class FirebaseInitialization {
+    @PostConstruct
+    public void initialization() {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("./serviceAccountKey.json");
 
-    private static final Map<String, FirebaseApp> instances = new HashMap<>();
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
 
-    @Bean
-    public FirebaseApp initialization() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("./serviceAccountKey.json");
+            FirebaseApp.initializeApp(options, "myCustomAppName");
+            latch.countDown();
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
-
-        FirebaseApp app = FirebaseApp.initializeApp(options, "myCustomAppName");
-        synchronized (instances) {
-            instances.put("myCustomAppName", app);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return app;
-    }
 
-    public static Map<String, FirebaseApp> getInstances() {
-        return instances;
+    }
+    private CountDownLatch latch = new CountDownLatch(1);  // Initialize latch with count 1
+
+    public void awaitInitialization() throws InterruptedException {
+        latch.await();  // Wait for initialization to signal completion
     }
 }

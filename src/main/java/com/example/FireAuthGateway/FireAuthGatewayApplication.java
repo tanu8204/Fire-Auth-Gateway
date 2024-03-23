@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.example.FireAuthGateway.FirebaseInitialization","com.example.FireAuthGateway.Controller", "com.example.FireAuthGateway.Service"})
 public class FireAuthGatewayApplication {
 
 	public static void main(String[] args) {
