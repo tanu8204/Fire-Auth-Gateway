@@ -7,26 +7,28 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @Service
 public class FireBaseInitization {
 
     @PostConstruct
-    public void initialization() {
+    public void initializeFirestore() throws IOException, FileNotFoundException {
         FileInputStream serviceAccount =
-                null;
-        try {
-            serviceAccount = new FileInputStream("./serviceAccountKey.json");
-
+                new FileInputStream("./serviceAccountKey.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
 
-        FirebaseApp.initializeApp(options);
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Clear existing FirebaseApp instances
+        for (FirebaseApp app : FirebaseApp.getApps()) {
+            app.delete();
         }
+
+        // Initialize FirebaseApp with the new options
+        FirebaseApp.initializeApp(options);
     }
 
 }
