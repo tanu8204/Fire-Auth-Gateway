@@ -13,9 +13,17 @@ import java.util.concurrent.ExecutionException;
 //@CrossOrigin(origins = {"http://localhost:8086/"})
 public class UsersController {
 
+/*
     @Autowired
     private UsersService usersService;
+*/
 
+    private final UsersService usersService;
+
+    @Autowired
+    public UsersController(UsersService usersService) {
+        this.usersService = usersService;
+    }
     @PostMapping("/users")
     public String saveUsers(@RequestBody Users users) throws ExecutionException, InterruptedException {
         return usersService.saveUsers(users);
