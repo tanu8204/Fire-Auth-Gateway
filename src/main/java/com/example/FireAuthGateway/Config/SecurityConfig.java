@@ -1,3 +1,4 @@
+/*
 package com.example.FireAuthGateway.Config;
 
 import org.springframework.context.annotation.Bean;
@@ -27,3 +28,4 @@ public class SecurityConfig {
     }
 
 }
+*/
