@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.3'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring Boot Starter Web for creating RESTful APIs
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok:1.18.28'
+	implementation 'org.projectlombok:lombok:1.18.28'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Firebase Admin SDK for integrating with Firebase Realtime Database
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+	// Google OAuth Client Library for verifying Firebase ID Tokens
+	implementation group: 'com.google.api-client', name: 'google-api-client', version: '2.2.0'
+
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '3.2.2'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.2'
+
+	implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '3.2.3'
+
+	implementation group: 'com.github.fabiomaffioletti', name: 'spring-boot-starter-data-firebase', version: '1.0.0.RELEASE'
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
