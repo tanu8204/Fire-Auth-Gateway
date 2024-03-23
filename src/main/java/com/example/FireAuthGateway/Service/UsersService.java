@@ -6,6 +6,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,10 @@ public class UsersService {
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
 
-        Firestore dbFirestore=FirestoreClient.getFirestore();
+        //Firestore dbFirestore=FirestoreClient.getFirestore();
+        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
+        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
+
 
         DocumentReference documentReference=dbFirestore.collection(COLLECTION_NAME).document(username);
 
