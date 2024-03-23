@@ -17,13 +17,13 @@ RUN ./gradlew build
 FROM openjdk:17.0.1-jdk-slim
 
 # Expose port 8080
-EXPOSE 8082
+EXPOSE 8085
 
 # Create a directory for the application
 RUN mkdir /app
 
 # Copy the built JAR from the build stage to the runtime stage
-COPY Vendor-0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
+COPY FireAuthGateway-0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
 
 # Set the entry point to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "/app/spring-boot-application.jar"]
