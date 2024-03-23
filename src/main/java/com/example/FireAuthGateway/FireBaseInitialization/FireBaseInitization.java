@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static com.google.firebase.FirebaseApp.DEFAULT_APP_NAME;
+
 @Service
 public class FireBaseInitization {
 
@@ -40,7 +42,7 @@ public class FireBaseInitization {
                     FirebaseOptions options = new FirebaseOptions.Builder()
                             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                             .build();
-                    FirebaseApp.initializeApp(options);
+                    FirebaseApp.initializeApp(options,DEFAULT_APP_NAME);
                     firebaseInitialized = true;
                 } catch (FileNotFoundException e) {
                     System.err.println("Service account JSON file not found.");
