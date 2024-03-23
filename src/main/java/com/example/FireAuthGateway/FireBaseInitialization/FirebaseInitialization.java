@@ -7,25 +7,33 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
-public class FireBaseInitization {
+public class FirebaseInitialization {
+
+    private static final Map<String, FirebaseApp> instances = new HashMap<>();
 
     @PostConstruct
     public void initialization() {
         try {
             FileInputStream serviceAccount =
                     new FileInputStream("./serviceAccountKey.json");
+
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
 
-            FirebaseApp.initializeApp(options, "myCustomAppName");
+            FirebaseApp app = FirebaseApp.initializeApp(options, "myCustomAppName");
 
-        } catch (Exception e) {
+            synchronized (instances) {
+                instances.put("myCustomAppName", app);
+            }
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
