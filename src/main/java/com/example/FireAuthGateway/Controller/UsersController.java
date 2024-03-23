@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
+//@CrossOrigin(origins = {"http://localhost:8086/"})
 public class UsersController {
 
     @Autowired
