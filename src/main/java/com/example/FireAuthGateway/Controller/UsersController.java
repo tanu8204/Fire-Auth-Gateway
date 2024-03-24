@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 //@RequestMapping("/api")
-//@CrossOrigin(origins = {"http://localhost:8086/"})
+@CrossOrigin(origins = {"https://fire-auth-gateway.onrender.com"})
 public class UsersController {
 
     @Autowired

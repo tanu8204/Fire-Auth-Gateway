@@ -12,18 +12,18 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class UsersService {
 
     private static final String COLLECTION_NAME = "crud_user";
+  //  private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
 
-    @Autowired
+    /*@Autowired
     private FirebaseInitialization firebaseInitialization;
-
+*/
     public String saveUsers(Users users) throws ExecutionException, InterruptedException {
 
         Firestore dbFirestore=FirestoreClient.getFirestore();
@@ -34,7 +34,7 @@ public class UsersService {
     }
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
-        firebaseInitialization.awaitInitialization();
+      //  firebaseInitialization.awaitInitialization();
         //Firestore dbFirestore=FirestoreClient.getFirestore();
         FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
         Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
@@ -53,7 +53,28 @@ public class UsersService {
         }else{
             return null;
         }
+        /*try {
+            FirebaseApp customApp = firebaseInitialization.getFirebaseApp();
+            Firestore dbFirestore = FirestoreClient.getFirestore(customApp);
+
+            DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(username);
+            ApiFuture<DocumentSnapshot> future = documentReference.get();
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+                return document.toObject(Users.class);
+            } else {
+                logger.warn("User with username '{}' not found", username);
+                return null;
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error getting user details", e);
+            // Handle the error appropriately, e.g., throw custom exception or return null
+            return null;
+        }*/
+
     }
+
 
     public String updateUsers(Users users) throws ExecutionException, InterruptedException {
 
