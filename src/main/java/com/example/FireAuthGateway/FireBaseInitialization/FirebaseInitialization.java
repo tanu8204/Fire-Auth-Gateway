@@ -25,9 +25,11 @@ public class FirebaseInitialization {
             FileInputStream serviceAccount =
                     new FileInputStream("./serviceAccountKey.json");
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
+            FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
+
+            System.out.println(options);
 
            FirebaseApp.initializeApp(options, "fir-db-5c67e");
         } catch (IOException e) {
