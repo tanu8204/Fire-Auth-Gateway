@@ -27,18 +27,11 @@ public class FirebaseInitialization {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://fir-db-5c67e.firebaseio.com")
-                    .setProjectId("fir-db-5c67e")
                     .build();
 
-           this.firebaseApp = FirebaseApp.initializeApp(options, "myCustomAppName");
-            System.out.println("Firebase initialized successfully");
+           FirebaseApp.initializeApp(options, "fir-db-5c67e");
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (firebaseApp == null) {
-                throw new IllegalStateException("FirebaseApp initialization failed");
-            }
         }
     }
 

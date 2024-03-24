@@ -30,7 +30,7 @@ public class UsersService {
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
 
-        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
+        FirebaseApp customApp = FirebaseApp.getInstance("fir-db-5c67e"); // Retrieve custom app instance
         Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
 
 
