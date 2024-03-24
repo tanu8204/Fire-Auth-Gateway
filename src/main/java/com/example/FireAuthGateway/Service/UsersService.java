@@ -21,9 +21,8 @@ public class UsersService {
   //  private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
 
-    /*@Autowired
+    @Autowired
     private FirebaseInitialization firebaseInitialization;
-*/
     public String saveUsers(Users users) throws ExecutionException, InterruptedException {
 
         Firestore dbFirestore=FirestoreClient.getFirestore();
@@ -35,10 +34,11 @@ public class UsersService {
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
       //  firebaseInitialization.awaitInitialization();
-        //Firestore dbFirestore=FirestoreClient.getFirestore();
-        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
-        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
+//        //Firestore dbFirestore=FirestoreClient.getFirestore();
+//        FirebaseApp customApp = FirebaseApp.getInstance("myCustomAppName"); // Retrieve custom app instance
+//        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
 
+        Firestore dbFirestore = FirestoreClient.getFirestore(firebaseInitialization.getFirebaseApp());
 
         DocumentReference documentReference=dbFirestore.collection(COLLECTION_NAME).document(username);
 

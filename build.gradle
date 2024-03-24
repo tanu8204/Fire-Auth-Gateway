@@ -22,7 +22,6 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.28'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// Firebase Admin SDK for integrating with Firebase Realtime Database
-	//implementation 'com.google.firebase:firebase-admin:9.2.0'
 	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.2.0'
 
 
@@ -40,6 +39,10 @@ dependencies {
 	implementation group: 'com.github.fabiomaffioletti', name: 'spring-boot-starter-data-firebase', version: '1.0.0.RELEASE'
 
 	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
+	// Google Cloud client library for authentication
+	implementation 'com.google.auth:google-auth-library-oauth2-http:1.12.0'
+
 }
 
 tasks.named('test') {
