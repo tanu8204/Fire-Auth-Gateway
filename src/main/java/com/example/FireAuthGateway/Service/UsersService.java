@@ -1,49 +1,50 @@
 package com.example.FireAuthGateway.Service;
 
 import com.example.FireAuthGateway.Entity.Users;
-import com.example.FireAuthGateway.FireBaseInitialization.FirebaseInitialization;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.cloud.FirestoreClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
 
+@Slf4j
 @Service
 public class UsersService {
 
     private static final String COLLECTION_NAME = "crud_user";
 
 
-    public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
+    public Users getUsersDetails(String username) {
+        try {
+            FirebaseApp customApp = FirebaseApp.getInstance(); // Retrieve custom app instance
+            log.debug("Custom app instance: {}", customApp);
 
-        FirebaseApp customApp = FirebaseApp.getInstance(); // Retrieve custom app instance
-        System.out.println("customApp");
-        Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
-        System.out.println("dbFirestore");
+            Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
+            log.debug("Firestore instance: {}", dbFirestore);
 
+            DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(username);
 
-        DocumentReference documentReference=dbFirestore.collection(COLLECTION_NAME).document(username);
+            ApiFuture<DocumentSnapshot> future = documentReference.get();
 
-        ApiFuture<DocumentSnapshot> future= documentReference.get();
+            DocumentSnapshot document = future.get();
+            log.debug("Document: {}", document);
 
-        DocumentSnapshot document= future.get();
-        System.out.println("document");
-
-        Users users=null;
-        if(document.exists()){
-            users=document.toObject(Users.class);
-            System.out.println("users");
-            return users;
-        }else{
-            System.out.println("null");
+            if (document.exists()) {
+                Users users = document.toObject(Users.class);
+                log.debug("Retrieved user details: {}", users);
+                return users;
+            } else {
+                log.info("User with username {} does not exist", username);
+                return null;
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Error retrieving user details: {}", e.getMessage(), e);
             return null;
-
         }
     }
 }

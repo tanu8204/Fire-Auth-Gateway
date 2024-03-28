@@ -3,35 +3,57 @@ package com.example.FireAuthGateway.FireBaseInitialization;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
-@Service
+@Slf4j
+@Configuration
 public class FirebaseInitialization {
 
-    @Async
     @PostConstruct
-    public CompletableFuture<Void> initializationAsync() {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                FileInputStream serviceAccount = new FileInputStream("./serviceAccountKey.json");
+    public void initialization() {
+        FileInputStream serviceAccount = null;
+        try {
+            serviceAccount = new FileInputStream("serviceAccountKey.json");
 
-                FirebaseOptions options = FirebaseOptions.builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .build();
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
 
-                FirebaseApp.initializeApp(options);
-                System.out.println("Firebase initialized successfully");
-                System.out.println(options);
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new IllegalStateException("Error initializing Firebase", e);
+            FirebaseApp.initializeApp(options);
+            log.info("Firebase initialized successfully.");
+        } catch (IOException e) {
+            log.error("Error occurred while initializing Firebase: {}", e.getMessage());
+        } finally {
+            if (serviceAccount != null) {
+                try {
+                    serviceAccount.close();
+                } catch (IOException e) {
+                    log.error("Error closing service account file: {}", e.getMessage());
+                }
             }
-        });
+        }
     }
 }
+/*@Configuration
+public class FirebaseInitialization {
+    @Bean
+    public FirebaseApp getFireStore(@Value("${firebase.credential.path}") String credentialPath) throws IOException {
+        var serviceAccount = new FileInputStream(credentialPath);
+        var credentials = GoogleCredentials.fromStream(serviceAccount);
+
+        System.out.println(credentials);
+
+        var options = FirestoreOptions.newBuilder()
+                .setCredentials(credentials).build();
+
+        System.out.println(options);
+      //  return options.getService();
+        return FirebaseApp.initializeApp(String.valueOf(options));
+
+    }
+}*/
