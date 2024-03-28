@@ -1,3 +1,4 @@
+/*
 package com.example.FireAuthGateway.Service;
 
 import com.example.FireAuthGateway.Entity.Users;
@@ -19,19 +20,13 @@ public class UsersService {
 
     private static final String COLLECTION_NAME = "crud_user";
 
-    public String saveUsers(Users users) throws ExecutionException, InterruptedException {
-
-        Firestore dbFirestore=FirestoreClient.getFirestore();
-
-        ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(users.getUsername()).set(users);
-
-        return collectionApiFuture.get().getUpdateTime().toString();
-    }
 
     public Users getUsersDetails(String username) throws ExecutionException, InterruptedException {
 
-        FirebaseApp customApp = FirebaseApp.getInstance("fir-db-5c67e"); // Retrieve custom app instance
+        FirebaseApp customApp = FirebaseApp.getInstance(); // Retrieve custom app instance
+        System.out.println("customApp");
         Firestore dbFirestore = FirestoreClient.getFirestore(customApp); // Use custom app instance for Firestore
+        System.out.println("dbFirestore");
 
 
         DocumentReference documentReference=dbFirestore.collection(COLLECTION_NAME).document(username);
@@ -39,52 +34,17 @@ public class UsersService {
         ApiFuture<DocumentSnapshot> future= documentReference.get();
 
         DocumentSnapshot document= future.get();
+        System.out.println("document");
 
         Users users=null;
         if(document.exists()){
             users=document.toObject(Users.class);
+            System.out.println("users");
             return users;
         }else{
+            System.out.println("null");
             return null;
+
         }
-        /*try {
-            FirebaseApp customApp = firebaseInitialization.getFirebaseApp();
-            Firestore dbFirestore = FirestoreClient.getFirestore(customApp);
-
-            DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(username);
-            ApiFuture<DocumentSnapshot> future = documentReference.get();
-            DocumentSnapshot document = future.get();
-
-            if (document.exists()) {
-                return document.toObject(Users.class);
-            } else {
-                logger.warn("User with username '{}' not found", username);
-                return null;
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Error getting user details", e);
-            // Handle the error appropriately, e.g., throw custom exception or return null
-            return null;
-        }*/
-
     }
-
-
-    public String updateUsers(Users users) throws ExecutionException, InterruptedException {
-
-        Firestore dbFirestore=FirestoreClient.getFirestore();
-
-        ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(users.getUsername()).set(users);
-
-        return collectionApiFuture.get().getUpdateTime().toString();
-    }
-
-    public String deleteUsers(String username) throws ExecutionException, InterruptedException {
-
-        Firestore dbFirestore=FirestoreClient.getFirestore();
-
-        ApiFuture<WriteResult> collectionApiFuture=dbFirestore.collection(COLLECTION_NAME).document(username).delete();
-
-        return "Document with Product ID "+username+" has been deleted successfully";
-    }
-}
+}*/

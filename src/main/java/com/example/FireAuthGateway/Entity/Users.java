@@ -1,3 +1,4 @@
+/*
 package com.example.FireAuthGateway.Entity;
 
 
@@ -20,3 +21,4 @@ public class Users {
     private String password;
 
 }
+*/

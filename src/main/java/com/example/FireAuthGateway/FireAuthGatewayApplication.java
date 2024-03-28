@@ -13,7 +13,6 @@ public class FireAuthGatewayApplication {
 		SpringApplication.run(FireAuthGatewayApplication.class, args);
 
 
-
 	}
 
 }
