@@ -1,4 +1,3 @@
-/*
 package com.example.FireAuthGateway.FireBaseInitialization;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -36,4 +35,3 @@ public class FirebaseInitialization {
         });
     }
 }
-*/

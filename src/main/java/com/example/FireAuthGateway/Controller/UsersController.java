@@ -2,8 +2,10 @@ package com.example.FireAuthGateway.Controller;
 
 //import com.example.FireAuthGateway.Entity.Users;
 //import com.example.FireAuthGateway.Service.UsersService;
+
+import com.example.FireAuthGateway.Entity.Users;
+import com.example.FireAuthGateway.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +17,13 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/api")
 public class UsersController {
 
-    /*@Autowired
+    @Autowired
     private UsersService usersService;
 
     @GetMapping("/users/{username}")
     public Users getUsers(@PathVariable String username) throws ExecutionException, InterruptedException {
         return usersService.getUsersDetails(username);
-    }*/
+    }
     @GetMapping("/someinfo")
     public String someinfo(){
         return "Try to sing this: Blaaaa bla blaaa bla bla!";
