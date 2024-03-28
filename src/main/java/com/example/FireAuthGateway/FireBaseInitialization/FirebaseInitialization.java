@@ -15,7 +15,7 @@ import java.io.IOException;
 @Configuration
 public class FirebaseInitialization {
 
-    @Value("${firebase.credential.path}")
+    @Value("${SECRET_FILE_PATH:/etc/secrets/KEY}}")
     private String credentialPath;
     @PostConstruct
     public void initialization() {
