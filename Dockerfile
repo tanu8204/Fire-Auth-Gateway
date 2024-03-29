@@ -20,7 +20,7 @@ RUN ./gradlew build --no-daemon --stacktrace
 # Copy the application source code
 COPY . /app
 
-chmod +x gradlew
+RUN chmod +x gradlew
 
 # Build the JAR file
 RUN ./gradlew bootJar
