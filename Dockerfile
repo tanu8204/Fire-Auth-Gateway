@@ -14,13 +14,14 @@ COPY gradlew.bat /app/
 # Set the working directory
 WORKDIR /app
 
+RUN chmod +x gradlew
+
 # Download dependencies and cache them to improve build speed
 RUN ./gradlew build --no-daemon --stacktrace
 
 # Copy the application source code
 COPY . /app
 
-RUN chmod +x gradlew
 
 # Build the JAR file
 RUN ./gradlew bootJar
